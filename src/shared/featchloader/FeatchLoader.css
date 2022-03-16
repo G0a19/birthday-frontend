@@ -1,0 +1,56 @@
+.spinner {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.featchLoader {
+  position: relative;
+  border: 24px solid;
+  border-color: #fff transparent #fff transparent;
+  animation: rotate 2s linear infinite;
+}
+.featchLoader:before,
+.featchLoader:after {
+  content: "";
+  display: block;
+  border: 24px solid transparent;
+  border-left-color: #fff;
+  position: absolute;
+  left: -24px;
+  top: -24px;
+  animation: mvx 1s infinite linear;
+}
+.featchLoader:before {
+  border-color: transparent #fff transparent transparent;
+  animation-name: mvrx;
+  animation-delay: 0.5s;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mvx {
+  20%,
+  80% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes mvrx {
+  20%,
+  80% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(50%);
+  }
+}

@@ -1,0 +1,55 @@
+.errormodel {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.errormodel_wrapper {
+  width: calc(100% - 20px);
+  max-width: 300px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 80px 20px 20px;
+  flex-direction: column;
+  animation: show_error 0.4s forwards;
+}
+
+.errormodel_wrapper-description {
+  font-size: 30px;
+  color: #000;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 20px 0 100px;
+  text-align: center;
+}
+
+.errormodel_wrapper-btn {
+  padding: 8px 50px;
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@keyframes show_error {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
