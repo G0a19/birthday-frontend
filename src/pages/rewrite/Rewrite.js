@@ -59,7 +59,7 @@ const Rewrite = () => {
     const getBless = async () => {
       try {
         const call = await fetch(
-          `https://birth-day-ap.herokuapp.com/blessing/getbless/${blessId}`
+          `https://birth-day-ap.herokuapp.com/getbless/${blessId}`
         );
         const response = await call.json();
         if (response.error) setError(response.error);
@@ -89,6 +89,7 @@ const Rewrite = () => {
           }),
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
           },
         }
       );
@@ -98,7 +99,7 @@ const Rewrite = () => {
         setIsLoading(false);
         return;
       }
-      setSeccuesMsg("bless update");
+      setSeccuesMsg("Bless updated");
     } catch (error) {
       setError(error.error);
       setIsLoading(false);

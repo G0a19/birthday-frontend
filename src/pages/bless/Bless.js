@@ -37,13 +37,11 @@ const Bless = (props) => {
         const response = await call.json();
         if (response.error) setErr(response.error);
         setBless(response.bless);
+        setIsLoading(false);
       } catch (err) {}
     };
 
     getBless();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
   }, []);
 
   const setError = () => {
@@ -84,6 +82,7 @@ const Bless = (props) => {
           }),
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
           },
         }
       );

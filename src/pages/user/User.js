@@ -20,11 +20,9 @@ const User = (props) => {
       const call = await fetch("https://birth-day-ap.herokuapp.com/blessing");
       const response = await call.json();
       setBlessings(response.blesses);
+      setIsLoading(false);
     };
     getBlessings();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
   }, []);
 
   if (blessings) {

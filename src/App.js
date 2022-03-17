@@ -3,7 +3,9 @@ import { Suspense } from "react";
 import { BrowserRouter as Router, Switch, Link } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
+import jwt_decode from "jwt-decode";
 import Apploader from "./shared/Apploader/Apploader";
+import ErrorModel from "./shared/ErrorModel";
 
 import "./App.css";
 
@@ -16,11 +18,38 @@ const Rewrite = React.lazy(() => import("./pages/rewrite/Rewrite.js"));
 
 function App() {
   let user = useSelector((state) => state.user);
+  const [isLogout, setIsLogout] = useState(false);
+
+  useEffect(() => {
+    if (user.token) {
+      const { exp } = jwt_decode(user.token);
+      const expirationTime = exp * 1000 - 60000;
+      if (Date.now() >= expirationTime) {
+        setIsLogout(true);
+      } else {
+        const remaningTime = expirationTime - new Date();
+        setTimeout(() => {
+          setIsLogout(true);
+        }, remaningTime);
+      }
+    }
+  }, []);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
 
   return (
     <Suspense fallback={<Apploader />}>
+      {isLogout && (
+        <ErrorModel
+          message="expiration Time is over"
+          setError={logoutHandler}
+        />
+      )}
       <Switch>
-        {!user.id && (
+        {!user.token && (
           <Route path="/">
             <Login />
           </Route>

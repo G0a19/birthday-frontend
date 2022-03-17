@@ -78,6 +78,7 @@ const New = () => {
         }),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
       });
       const response = await call.json();
