@@ -59,7 +59,7 @@ const Rewrite = () => {
     const getBless = async () => {
       try {
         const call = await fetch(
-          `https://birth-day-ap.herokuapp.com/getbless/${blessId}`
+          `https://birth-day-ap.herokuapp.com/blessing/getbless/${blessId}`
         );
         const response = await call.json();
         if (response.error) setError(response.error);
