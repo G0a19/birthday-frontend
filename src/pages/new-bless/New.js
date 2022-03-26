@@ -1,7 +1,8 @@
-import { react, Fragment, useState, useRef, useEffect } from "react";
+import { react, Fragment, useRef, useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./New.css";
@@ -11,6 +12,7 @@ import Input from "../../shared/Input";
 import TextAdditor from "../../shared/TextAdditor";
 import SendLoader from "../../shared/sendicon/SendLoader";
 import ErrorModel from "../../shared/ErrorModel";
+import axios from "axios";
 
 const New = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +40,8 @@ const New = () => {
   };
 
   const updateImage = (e) => {
-    setImage(e.target.value);
+    const file = e.target.files[0];
+    setImage(file);
   };
 
   const updateDescription = (value) => {
@@ -65,31 +68,32 @@ const New = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    const data = new FormData();
+    data.append("file", image);
+    data.append("title", title);
+    data.append("description", description);
+    data.append("userGet", name);
+    data.append("year", year);
+    data.append("userId", user.id);
     try {
-      const call = await fetch("https://birth-day-ap.herokuapp.com/blessing", {
-        method: "POST",
-        body: JSON.stringify({
-          title: title,
-          description: description,
-          image: image,
-          userGet: name,
-          year: year,
-          userId: user.id,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const response = await call.json();
-      if (response.error) {
-        setError(response.error);
+      const call = await axios.post(
+        "https://birth-day-ap.herokuapp.com/blessing",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      if (call.data.error) {
+        setError(call.data.error);
         setIsLoading(false);
         return;
       }
-      setSeccuesMsg(response.message);
+      setSeccuesMsg(call.data.message);
     } catch (error) {
-      setError(error.error);
+      setError(error.response.data.error);
       setIsLoading(false);
     }
     setIsLoading(false);
@@ -129,13 +133,8 @@ const New = () => {
             title="year"
             type="number"
           />
-          <Input
-            value={image}
-            handler={updateImage}
-            placeholder="IMAGE"
-            title="image"
-            type="text"
-          />
+          <Input handler={updateImage} type="file" accept=".png,.jpeg,.jpg" />
+          {/* <input type="file" id="file" onChange={updateImage} /> */}
           <TextAdditor updateDescription={updateDescription} />
           <div className="new_btn-contianer">
             <button className="new_btn" type="submit">

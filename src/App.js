@@ -33,7 +33,7 @@ function App() {
         }, remaningTime);
       }
     }
-  }, []);
+  }, [user.token]);
 
   const logoutHandler = () => {
     localStorage.removeItem("user");

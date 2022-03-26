@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Markup } from "interweave";
 import Header from "../../shared/Header";
+import Ballons from "../../shared/ballons/Ballons";
 import ErrorModel from "../../shared/ErrorModel";
 import FeatchLoader from "../../shared/featchloader/FeatchLoader";
 import Choisemodel from "../../shared/choicemodel/Choisemodel";
@@ -21,6 +22,7 @@ const Bless = (props) => {
   const [trash, setTrash] = useState(false);
   const [showbtns, setShowbtns] = useState(false);
   const [seccuesMsg, setSeccuesMsg] = useState(false);
+  const [image, setImage] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const Bless = (props) => {
         const response = await call.json();
         if (response.error) setErr(response.error);
         setBless(response.bless);
+        setImage(response.bless.image);
         setIsLoading(false);
       } catch (err) {}
     };
@@ -79,6 +82,7 @@ const Bless = (props) => {
           method: "DELETE",
           body: JSON.stringify({
             userId: user.id,
+            imageId: image.id,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -90,8 +94,13 @@ const Bless = (props) => {
       if (response.error) return setErr(response.error);
       setSeccuesMsg(response.message);
       setIsLoading(false);
-    } catch (err) {}
+    } catch (err) {
+      setIsLoading(false);
+      setSeccuesMsg(err);
+    }
   };
+
+  const date = new Date(bless.date);
 
   return (
     <Fragment>
@@ -106,7 +115,7 @@ const Bless = (props) => {
         />
       )}
       {isLoading && <FeatchLoader />}
-      <Header></Header>
+      <Header />
       {err && <ErrorModel message={err} setError={setError} />}
       <div className="blessRead">
         {!bless && <h2 className="not_found">No bless found</h2>}
@@ -116,7 +125,13 @@ const Bless = (props) => {
             <div className="blessRead_description">
               <Markup content={bless.description} />
             </div>
-            <img className="blessRead_img" src={bless.image} alt="img" />
+            <img
+              className="blessRead_img"
+              src={
+                "https://drive.google.com/uc?export=view&id=" + image.id ?? ""
+              }
+              alt="img"
+            />
             {bless.user === user.id && (
               <div
                 onClick={showbtnsHandler}
@@ -133,9 +148,13 @@ const Bless = (props) => {
                 </button>
               </div>
             )}
+            <div className="date">{`${date.getDate()}/${
+              date.getMonth() + 1
+            }/${date.getFullYear()}`}</div>
           </Fragment>
         )}
       </div>
+      <Ballons number="5" />
     </Fragment>
   );
 };

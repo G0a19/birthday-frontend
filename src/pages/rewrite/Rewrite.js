@@ -13,6 +13,7 @@ import Input from "../../shared/Input";
 import SendLoader from "../../shared/sendicon/SendLoader";
 import ErrorModel from "../../shared/ErrorModel";
 import Textwithcontent from "../../shared/Textwithcontent";
+import axios from "axios";
 
 const Rewrite = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +37,8 @@ const Rewrite = () => {
   };
 
   const updateImage = (e) => {
-    setImage(e.target.value);
+    const file = e.target.files[0];
+    setImage(file);
   };
 
   const updateDescription = (value) => {
@@ -62,6 +64,7 @@ const Rewrite = () => {
           `https://birth-day-ap.herokuapp.com/blessing/getbless/${blessId}`
         );
         const response = await call.json();
+        console.log(response);
         if (response.error) setError(response.error);
         setBless(response.bless);
         setTitle(response.bless.title);
@@ -75,33 +78,30 @@ const Rewrite = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    const data = new FormData();
+    data.append("file", image);
+    data.append("title", title);
+    data.append("description", description);
+    data.append("year", year);
     try {
-      const call = await fetch(
+      const call = await axios.patch(
         `https://birth-day-ap.herokuapp.com/blessing/${bless.id}`,
+        data,
         {
-          method: "PATCH",
-          body: JSON.stringify({
-            title: title,
-            description: description,
-            image: image,
-            year: year,
-            userId: user.id,
-          }),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,
           },
         }
       );
-      const response = await call.json();
-      if (response.error) {
-        setError(response.error);
+      if (call.data.error) {
+        setError(call.data.error);
         setIsLoading(false);
         return;
       }
       setSeccuesMsg("Bless updated");
     } catch (error) {
-      setError(error.error);
+      setError(error.response.data.error);
       setIsLoading(false);
     }
     setIsLoading(false);
@@ -133,13 +133,7 @@ const Rewrite = () => {
               title="year"
               type="number"
             />
-            <Input
-              value={image}
-              handler={updateImage}
-              placeholder="IMAGE"
-              title="image"
-              type="text"
-            />
+            <Input handler={updateImage} type="file" accept=".png,.jpeg,.jpg" />
             <Textwithcontent
               updateDescription={updateDescription}
               text={bless.description}
