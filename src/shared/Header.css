@@ -90,6 +90,7 @@
 
 .dropdown_logout {
   width: 150px;
+  flex-basis: 45%;
   height: 150px;
   background-color: rgba(255, 0, 0, 0.7);
   border-radius: 20px;
@@ -114,6 +115,7 @@
 
 .dropdown_components {
   width: 150px;
+  flex-basis: 45%;
   height: 150px;
   background-color: rgba(128, 128, 128, 0.3);
   border-radius: 20px;
@@ -121,7 +123,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: calc(100% - (150px * 2));
+  margin-bottom: calc(100% - 90%);
 }
 
 .dropdown_components svg {
