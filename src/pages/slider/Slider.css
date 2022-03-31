@@ -1,0 +1,123 @@
+.slider {
+  padding: 10px;
+}
+
+.slider_title {
+  margin-top: 20px;
+  font-size: 25px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.slider_form {
+  margin-top: 25px;
+}
+
+.form_input {
+  border: 1px solid #000 !important;
+}
+
+.slider_form-btn {
+  position: relative;
+  padding: 19px 0px;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  border-radius: 40px;
+  width: 150px;
+  border: none;
+  margin: 0 auto;
+}
+
+.slider_form-btn span {
+  position: relative;
+  color: #fff;
+  font-family: Arial;
+  letter-spacing: 8px;
+  z-index: 1;
+}
+
+.slider_form-btn .liquid {
+  position: absolute;
+  top: -80px;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: #4973ff;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
+}
+
+.slider_form-btn .liquid::after,
+.slider_form-btn .liquid::before {
+  content: "";
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
+  background: #fff;
+}
+
+.slider_form-btn .liquid::before {
+  border-radius: 45%;
+  background: rgba(20, 20, 20, 1);
+  animation: animate 5s linear infinite;
+}
+
+.slider_form-btn .liquid::after {
+  border-radius: 40%;
+  background: rgba(20, 20, 20, 0.5);
+  animation: animate 10s linear infinite;
+}
+
+.slider_form-btn:hover .liquid {
+  top: -120px;
+}
+
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
+
+.plusButton {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(
+    0deg,
+    rgba(20, 167, 62, 1) 0%,
+    rgba(102, 247, 113, 1) 100%
+  );
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.plusButton svg {
+  margin-right: 6px;
+}
+
+.plusButton:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+}
+
+.plusButton:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}

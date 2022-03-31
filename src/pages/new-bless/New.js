@@ -86,6 +86,7 @@ const New = () => {
           },
         }
       );
+      console.log(call.response);
       if (call.data.error) {
         setError(call.data.error);
         setIsLoading(false);

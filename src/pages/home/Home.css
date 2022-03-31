@@ -68,3 +68,9 @@
   width: 25px;
   margin-bottom: 20px;
 }
+
+.slider img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

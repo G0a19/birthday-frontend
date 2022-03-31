@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import Logout from "./../images/log_out.svg";
 
 import "./Header.css";
+import Plus from "./icons/Plus";
+import Image from "./icons/Image";
 
 const Header = () => {
   const history = useHistory();
@@ -45,9 +47,21 @@ const Header = () => {
       <div className="header_space"></div>
 
       <div className={"dropdown " + openDropdown}>
-        <div onClick={logoutHandler} className="dropdown_logout">
-          <img src={Logout} alt="logut" />
-          <span>Log out</span>
+        <div className="dropdown_wrapper">
+          <Link to="/slider" className="dropdown_components">
+            <Plus />
+            <span className="dropdown_text">add slider</span>
+          </Link>
+
+          <Link to="/sliderimages" className="dropdown_components">
+            <Image />
+            <span className="dropdown_text">all images</span>
+          </Link>
+
+          <div onClick={logoutHandler} className="dropdown_logout">
+            <img src={Logout} alt="logut" />
+            <span className="dropdown_text">Log out</span>
+          </div>
         </div>
       </div>
     </Fragment>

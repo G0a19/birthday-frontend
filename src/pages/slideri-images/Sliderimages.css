@@ -1,0 +1,52 @@
+.images {
+  padding: 20px 0px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.images_single {
+  flex-basis: 50%;
+  min-height: 150px;
+  border: 1px solid #000;
+  position: relative;
+}
+
+.images_single img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.noImages {
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.SRLCaptionText {
+  display: none;
+}
+
+.images_single-remove {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 7px;
+  left: 7px;
+  border-radius: 50%;
+  background-color: rgba(255, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.images_single-remove svg {
+  width: 40%;
+  height: 40%;
+  object-fit: cover;
+  filter: brightness(0) invert(1);
+  touch-action: none;
+  pointer-events: none;
+}

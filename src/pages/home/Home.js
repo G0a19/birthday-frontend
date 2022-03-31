@@ -13,6 +13,7 @@ import "./Home.css";
 const Home = () => {
   const [users, setUsers] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [sliderImages, setSliderImages] = useState(false);
   SwiperCore.use([Autoplay]);
 
   useEffect(() => {
@@ -22,13 +23,51 @@ const Home = () => {
         const call = await fetch("https://birth-day-ap.herokuapp.com/users");
         const response = await call.json();
         setUsers(response.users);
+        setIsLoading(false);
       } catch (err) {}
     };
     getUsers();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+
+    const getSliderImages = async () => {
+      setIsLoading(true);
+      try {
+        const call = await fetch(
+          "https://birth-day-ap.herokuapp.com/sliderimages"
+        );
+        const response = await call.json();
+        if (response.images.length !== 0) setSliderImages(response);
+        else setSliderImages(false);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+    };
+    getSliderImages();
   }, []);
+
+  const sliders = sliderImages ? (
+    sliderImages.images.map((slider, key) => (
+      <SwiperSlide className="slider" key={key}>
+        <img
+          src={`https://drive.google.com/uc?export=view&id=${slider.imageId}`}
+          alt="img"
+        ></img>
+      </SwiperSlide>
+    ))
+  ) : (
+    <Fragment>
+      <SwiperSlide>
+        <div className="swiper_img img1"></div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="swiper_img img2"></div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="swiper_img img3"></div>
+      </SwiperSlide>
+    </Fragment>
+  );
 
   return (
     <Fragment>
@@ -45,15 +84,7 @@ const Home = () => {
           waitForTransition: true,
         }}
       >
-        <SwiperSlide>
-          <div className="swiper_img img1"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="swiper_img img2"></div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="swiper_img img3"></div>
-        </SwiperSlide>
+        {sliders}
       </Swiper>
 
       <div className="allBlessings">

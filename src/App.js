@@ -15,6 +15,10 @@ const User = React.lazy(() => import("./pages/user/User"));
 const Home = React.lazy(() => import("./pages/home/Home"));
 const Bless = React.lazy(() => import("./pages/bless/Bless"));
 const Rewrite = React.lazy(() => import("./pages/rewrite/Rewrite.js"));
+const Slider = React.lazy(() => import("./pages/slider/Slider.js"));
+const SliderImages = React.lazy(() =>
+  import("./pages/slideri-images/Sliderimages.js")
+);
 
 function App() {
   let user = useSelector((state) => state.user);
@@ -69,6 +73,14 @@ function App() {
 
         <Route path="/rewrite/">
           <Rewrite />
+        </Route>
+
+        <Route path="/slider" exact>
+          <Slider />
+        </Route>
+
+        <Route path="/sliderimages" exact>
+          <SliderImages />
         </Route>
 
         <Route path="/">
