@@ -54,6 +54,7 @@ const Slider = () => {
             },
           }
         );
+        console.log(call.data);
         setSeccuesMsg(call.data.message);
         setIsLoading(false);
       } catch (e) {
@@ -76,9 +77,9 @@ const Slider = () => {
         <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
       )}
       {error && <ErrorModel message={error} setError={errorHandler} />}
-      <div className="slider">
-        <h2 className="slider_title">slider Management</h2>
-        <form className="slider_form" onSubmit={submitHandler}>
+      <div className="sliderAdd">
+        <h2 className="sliderAdd_title">slider Management</h2>
+        <form className="sliderAdd_form" onSubmit={submitHandler}>
           {inputs}
           <button className="plusButton" onClick={incrementFiles}>
             <svg
@@ -95,7 +96,7 @@ const Slider = () => {
             </svg>
             <span>Add</span>
           </button>
-          <button type="submit" className="slider_form-btn">
+          <button type="submit" className="sliderAdd_form-btn">
             <span>submit</span>
             <div className="liquid"></div>
           </button>
