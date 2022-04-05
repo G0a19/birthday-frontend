@@ -85,7 +85,9 @@ const Home = () => {
           disableOnInteraction: false,
           waitForTransition: true,
         }}
-        pagination={true}
+        pagination={{
+          clickable: true,
+        }}
         modules={[Pagination]}
       >
         {sliders}
