@@ -79,7 +79,7 @@ const Home = () => {
         spaceBetween={0}
         slidesPerView={1}
         loop={true}
-        speed={2000}
+        speed={1000}
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,
