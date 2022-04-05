@@ -1,6 +1,7 @@
 import { Fragment, react, useEffect, useState } from "react";
 import { Route, Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
 import SwiperCore, { Autoplay } from "swiper";
 
 import Header from "../../shared/Header";
@@ -9,6 +10,7 @@ import Plus from "./../../shared/icons/Plus";
 import FeatchLoader from "../../shared/featchloader/FeatchLoader";
 import "swiper/css";
 import "./Home.css";
+import "swiper/css/pagination";
 
 const Home = () => {
   const [users, setUsers] = useState(false);
@@ -83,6 +85,8 @@ const Home = () => {
           disableOnInteraction: false,
           waitForTransition: true,
         }}
+        pagination={true}
+        modules={[Pagination]}
       >
         {sliders}
       </Swiper>
