@@ -16,6 +16,7 @@ const Home = React.lazy(() => import("./pages/home/Home"));
 const Bless = React.lazy(() => import("./pages/bless/Bless"));
 const Rewrite = React.lazy(() => import("./pages/rewrite/Rewrite.js"));
 const Slider = React.lazy(() => import("./pages/slider/Slider.js"));
+const BlessPage = React.lazy(() => import("./pages/blessPage/BlessPage.js"));
 const SliderImages = React.lazy(() =>
   import("./pages/slideri-images/Sliderimages.js")
 );
@@ -67,8 +68,12 @@ function App() {
           <User />
         </Route>
 
-        <Route path="/bless/">
+        <Route path="/blesspage/bless/">
           <Bless />
+        </Route>
+
+        <Route path="/blesspage/">
+          <BlessPage />
         </Route>
 
         <Route path="/rewrite/">

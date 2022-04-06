@@ -40,11 +40,11 @@ const User = (props) => {
           {myBlessings.length !== 0 &&
             myBlessings.map((bless, key) => (
               <Link
-                to={`/bless/?bless=${bless.id}`}
+                to={`/blesspage/?bless=${bless.id}`}
                 className="single_bless"
                 key={key}
               >
-                <h2 className="single_bless-year">{bless.year}</h2>
+                <h2 className="single_bless-year">{bless.year}</h2>{" "}
               </Link>
             ))}
         </div>
