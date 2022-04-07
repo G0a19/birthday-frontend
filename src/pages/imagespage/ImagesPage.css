@@ -3,29 +3,29 @@
 }
 
 /* upload images */
-.ant-row {
+.imagespage .ant-row {
   flex-direction: column;
 }
-.ant-col-10 {
+.imagespage .ant-col-10 {
   flex-basis: 100%;
   max-width: none;
 }
-.ant-col-14 {
+.imagespage .ant-col-14 {
   flex-basis: 100%;
   max-width: none;
   height: fit-content;
 }
-.media-library {
+.imagespage .media-library {
   display: none;
 }
-.upload-image-preview .ant-row {
+.imagespage .upload-image-preview .ant-row {
   display: flex;
   flex-direction: row;
 }
-.upload-image-preview .ant-col {
+.imagespage .upload-image-preview .ant-col {
   margin-right: 10px;
 }
-.ant-card-bordered {
+.imagespage .ant-card-bordered {
   border: none;
   border-bottom: 1px solid #f0f0f0;
 }
