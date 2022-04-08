@@ -18,7 +18,6 @@ const Sliderimages = () => {
   const [error, setError] = useState(false);
   const [seccuesMsg, setsSccuesMsg] = useState(false);
   let user = useSelector((state) => state.user);
-  const history = useHistory();
 
   useEffect(() => {
     const getSliderImages = async () => {

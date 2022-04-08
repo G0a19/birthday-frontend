@@ -9,6 +9,8 @@ import FeatchLoader from "../../shared/featchloader/FeatchLoader";
 import axios from "axios";
 import Header from "../../shared/Header";
 import ErrorModel from "./../../shared/ErrorModel";
+import Trash from "./../../shared/icons/Trash";
+import Choisemodel from "../../shared/choicemodel/Choisemodel";
 
 const ImagesPage = () => {
   let user = useSelector((state) => state.user);
@@ -17,6 +19,8 @@ const ImagesPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [seccuesMsg, setSeccuesMsg] = useState(false);
+  const [deleteImage, setDeleteImage] = useState(false);
+  const [imageId, setImageId] = useState(false);
 
   const url = new URL(window.location);
   const param = new URLSearchParams(url.search);
@@ -39,7 +43,7 @@ const ImagesPage = () => {
     };
 
     getImages();
-  }, []);
+  }, [blessId]);
 
   const errorHandler = () => {
     setError(false);
@@ -82,6 +86,39 @@ const ImagesPage = () => {
     console.log("Remove image id", id);
   };
 
+  const removeImageHandler = async (event) => {
+    setImageId(event.target.getAttribute("data-id"));
+    setDeleteImage(true);
+  };
+
+  const removeChoiceModelHandler = () => {
+    setDeleteImage(false);
+  };
+
+  const deleteImageHandler = async () => {
+    setBlessImages(blessImages.filter((image) => image.imageId !== imageId));
+    setDeleteImage(false);
+    setIsLoading(2);
+    try {
+      const call = await fetch("https://birth-day-ap.herokuapp.com/images", {
+        method: "DELETE",
+        body: JSON.stringify({ imageid: imageId }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const response = await call.json();
+      if (response.error) {
+        setError(response.error);
+        setIsLoading(false);
+        return;
+      }
+      setSeccuesMsg(response.message);
+      setIsLoading(false);
+    } catch (error) {}
+  };
+
   return (
     <Fragment>
       <Header />
@@ -91,6 +128,13 @@ const ImagesPage = () => {
         <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
       )}
       {error && <ErrorModel message={error} setError={errorHandler} />}
+      {deleteImage && (
+        <Choisemodel
+          title="Do you want to delete this image"
+          no={removeChoiceModelHandler}
+          yes={deleteImageHandler}
+        />
+      )}
       <div className="imagespage">
         <RMIUploader
           onUpload={onUpload}
@@ -109,6 +153,13 @@ const ImagesPage = () => {
                     }
                     alt="img"
                   />
+                  <div
+                    className="imagespage_singleImage-remove"
+                    data-id={image.imageId}
+                    onClick={removeImageHandler}
+                  >
+                    <Trash />
+                  </div>
                 </div>
               ))}
           </div>
