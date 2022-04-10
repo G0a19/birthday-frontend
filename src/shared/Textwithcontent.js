@@ -24,7 +24,7 @@ const Textwithcontent = (props) => {
 
   useEffect(() => {
     props.updateDescription(props.text);
-  }, []);
+  }, [props]);
 
   return (
     <Editor
