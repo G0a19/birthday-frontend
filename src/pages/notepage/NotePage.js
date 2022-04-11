@@ -31,6 +31,7 @@ const NotePage = () => {
         );
         const response = await call.json();
         setDescription(response.note);
+        setUpdatedDescription(response.note);
         setIsLoading(false);
       } catch (error) {}
     };
@@ -105,10 +106,12 @@ const NotePage = () => {
         className={"writeNote " + writeNoteClass}
         onSubmit={onSubmitHandler}
       >
-        <Textwithcontent
-          text={updatedDescription}
-          updateDescription={updateDescription}
-        />
+        {description && (
+          <Textwithcontent
+            text={description}
+            updateDescription={updateDescription}
+          />
+        )}
         <button type="submit" className="sliderAdd_form-btn">
           <span>submit</span>
           <div className="liquid"></div>
