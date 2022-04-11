@@ -12,8 +12,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const NotePage = () => {
   const [writeNoteClass, setWriteNoteClass] = useState(false);
-  const [description, setDescription] = useState(false);
-  const [updatedDescription, setUpdatedDescription] = useState("");
+  const [description, setDescription] = useState();
   const [successMsg, setSuccessMsg] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   let user = useSelector((state) => state.user);
@@ -30,16 +29,19 @@ const NotePage = () => {
           "https://birth-day-ap.herokuapp.com/blessing/getnote/" + blessId
         );
         const response = await call.json();
-        setDescription(response.note);
-        setUpdatedDescription(response.note);
+        if (!response.note) {
+          setDescription("write your text here");
+        } else {
+          setDescription(response.note);
+        }
         setIsLoading(false);
       } catch (error) {}
     };
     getNote();
-  }, []);
+  }, [blessId]);
 
   const updateDescription = (value) => {
-    setUpdatedDescription(value);
+    setDescription(value);
   };
 
   const showWriteNoteHandler = () => {
@@ -64,7 +66,7 @@ const NotePage = () => {
           method: "POST",
           body: JSON.stringify({
             blessId: blessId,
-            noteContent: updatedDescription,
+            noteContent: description,
           }),
           headers: {
             "Content-Type": "application/json",
@@ -74,13 +76,14 @@ const NotePage = () => {
       );
       const response = await call.json();
       setSuccessMsg(response.message);
-      setDescription(updatedDescription);
       setWriteNoteClass(false);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  //   console.log(updatedDescription);
 
   return (
     <Fragment>
