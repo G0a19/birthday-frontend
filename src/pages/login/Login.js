@@ -65,6 +65,7 @@ const Login = (props) => {
             <input
               className="form_input"
               placeholder="Email"
+              type="email"
               value={email}
               onChange={updateEmail}
             />

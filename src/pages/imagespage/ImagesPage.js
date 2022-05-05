@@ -1,6 +1,5 @@
 import { Fragment, react, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RMIUploader } from "react-multiple-image-uploader";
 import { SRLWrapper } from "simple-react-lightbox";
 
 import "./ImagesPage.css";
@@ -11,6 +10,8 @@ import Header from "../../shared/Header";
 import ErrorModel from "./../../shared/ErrorModel";
 import Trash from "./../../shared/icons/Trash";
 import Choisemodel from "../../shared/choicemodel/Choisemodel";
+import Upload from "../../shared/icons/Upload";
+import Docs from "./../../shared/icons/Docs";
 
 const ImagesPage = () => {
   let user = useSelector((state) => state.user);
@@ -53,12 +54,21 @@ const ImagesPage = () => {
     window.location.reload(false);
   };
 
-  const onUpload = async (data) => {
-    setImages(data);
+  const uploadImagesHandler = (event) => {
+    if (Array.from(event.target.files).length === 0) {
+      return;
+    }
+    const files = Array.from(event.target.files);
+    setImages(files);
+  };
+
+  const onUploadHandler = async (event) => {
+    event.preventDefault();
     setIsLoading(2);
     const formData = new FormData();
-    data.map((file) => formData.append("file", file.file));
+    images.map((file) => formData.append("file", file));
     formData.append("blessId", blessId);
+    console.log(formData);
     try {
       const call = await axios.post(
         "https://birth-day-ap.herokuapp.com/images",
@@ -74,16 +84,13 @@ const ImagesPage = () => {
         setError(call.data.error);
         return;
       }
+      console.log(call.data);
       setSeccuesMsg(call.data.message);
       setIsLoading(false);
     } catch (error) {
       setError("somthing went wrong please try again later");
       setIsLoading(false);
     }
-  };
-
-  const onRemove = (id) => {
-    console.log("Remove image id", id);
   };
 
   const removeImageHandler = async (event) => {
@@ -136,11 +143,52 @@ const ImagesPage = () => {
         />
       )}
       <div className="imagespage">
-        <RMIUploader
-          onUpload={onUpload}
-          onRemove={onRemove}
-          dataSources={images}
-        />
+        <form className="imagespage_form" onSubmit={onUploadHandler}>
+          <div className="imagespage_upload">
+            <input
+              className="imagespage_upload-input"
+              type="file"
+              onChange={uploadImagesHandler}
+              accept=".png,.jpeg,.jpg"
+              multiple
+            />
+            <Upload />
+          </div>
+          <button className="imagespage_form-btn download-button">
+            <div className="docs">
+              <Docs />
+              Docs
+            </div>
+            <div className="download">
+              <svg
+                className="css-i6dzq1"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                fill="none"
+                strokeWidth="2"
+                stroke="currentColor"
+                height="24"
+                width="24"
+                viewBox="0 0 24 24"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line y2="3" x2="12" y1="15" x1="12"></line>
+              </svg>
+            </div>
+          </button>
+        </form>
+
+        <div className="imagespage_files">
+          {images.map((image, key) => {
+            return (
+              <span key={key} className="imagespage_files">
+                {image.name}
+              </span>
+            );
+          })}
+        </div>
+
         <SRLWrapper>
           <div className="imagespage_images">
             {blessImages &&
