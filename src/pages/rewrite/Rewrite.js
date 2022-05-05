@@ -45,6 +45,8 @@ const Rewrite = () => {
     setDescription(value);
   };
 
+  console.log(description);
+
   const errorSet = () => {
     setError(false);
   };
@@ -70,6 +72,7 @@ const Rewrite = () => {
         setTitle(response.bless.title);
         setYear(response.bless.year);
         setImage(response.bless.image);
+        updateDescription(response.bless.description);
       } catch (err) {}
     };
     getBless();
@@ -85,7 +88,7 @@ const Rewrite = () => {
     data.append("year", year);
     try {
       const call = await axios.patch(
-        `https://birth-day-ap.herokuapp.com/blessing/${bless.id}`,
+        `http://localhost:5000/blessing/${bless.id}`,
         data,
         {
           headers: {

@@ -22,10 +22,6 @@ const Textwithcontent = (props) => {
     );
   };
 
-  useEffect(() => {
-    props.updateDescription(props.text);
-  }, [props]);
-
   return (
     <Editor
       toolbarClassName="toolbarClassName"
@@ -38,4 +34,4 @@ const Textwithcontent = (props) => {
   );
 };
 
-export default Textwithcontent;
+export default React.memo(Textwithcontent);
