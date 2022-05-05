@@ -88,7 +88,7 @@ const Rewrite = () => {
     data.append("year", year);
     try {
       const call = await axios.patch(
-        `http://localhost:5000/blessing/${bless.id}`,
+        `https://birth-day-ap.herokuapp.com/blessing/${bless.id}`,
         data,
         {
           headers: {
