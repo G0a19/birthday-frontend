@@ -20,6 +20,7 @@ const ImagesPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [seccuesMsg, setSeccuesMsg] = useState(false);
+  const [removeMsg, setRemoveMsg] = useState(false);
   const [deleteImage, setDeleteImage] = useState(false);
   const [imageId, setImageId] = useState(false);
 
@@ -37,6 +38,7 @@ const ImagesPage = () => {
         const response = await call.json();
         setIsLoading(false);
         setBlessImages(response.images);
+        console.log(response, images);
       } catch (error) {
         setError("somthing went wrong please try again later");
         setIsLoading(false);
@@ -52,6 +54,10 @@ const ImagesPage = () => {
 
   const seccuesMsgHandler = (msg) => {
     window.location.reload(false);
+  };
+
+  const removeMsgHandler = () => {
+    setRemoveMsg(false);
   };
 
   const uploadImagesHandler = (event) => {
@@ -121,7 +127,7 @@ const ImagesPage = () => {
         setIsLoading(false);
         return;
       }
-      setSeccuesMsg(response.message);
+      setRemoveMsg(response.message);
       setIsLoading(false);
     } catch (error) {}
   };
@@ -131,6 +137,9 @@ const ImagesPage = () => {
       <Header />
       {isLoading === 1 && <FeatchLoader />}
       {isLoading === 2 && <SendLoader />}
+      {removeMsg && (
+        <ErrorModel message={removeMsg} setError={removeMsgHandler} />
+      )}
       {seccuesMsg && (
         <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
       )}
