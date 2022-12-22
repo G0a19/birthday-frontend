@@ -58,7 +58,7 @@ const New = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const call = await fetch("https://birth-day-ap.herokuapp.com/users");
+      const call = await fetch("https://birthday-backend-production.up.railway.app/users");
       const response = await call.json();
       setUsers(response.users);
     };
@@ -76,16 +76,12 @@ const New = () => {
     data.append("year", year);
     data.append("userId", user.id);
     try {
-      const call = await axios.post(
-        "https://birth-day-ap.herokuapp.com/blessing",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const call = await axios.post("https://birthday-backend-production.up.railway.app/blessing", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       console.log(call.response);
       if (call.data.error) {
         setError(call.data.error);
@@ -102,9 +98,7 @@ const New = () => {
 
   return (
     <Fragment>
-      {seccuesMsg && (
-        <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
-      )}
+      {seccuesMsg && <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />}
       {error && <ErrorModel message={error} setError={errorSet} />}
       {isLoading && <SendLoader />}
       <Header></Header>
@@ -120,20 +114,8 @@ const New = () => {
                 </option>
               ))}
           </select>
-          <Input
-            value={title}
-            handler={updateTitle}
-            placeholder="TITLE"
-            title="title"
-            type="text"
-          />
-          <Input
-            value={year}
-            handler={updateYear}
-            placeholder="YEAR"
-            title="year"
-            type="number"
-          />
+          <Input value={title} handler={updateTitle} placeholder="TITLE" title="title" type="text" />
+          <Input value={year} handler={updateYear} placeholder="YEAR" title="year" type="number" />
           <Input handler={updateImage} type="file" accept=".png,.jpeg,.jpg" />
           {/* <input type="file" id="file" onChange={updateImage} /> */}
           <TextAdditor updateDescription={updateDescription} />

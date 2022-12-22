@@ -25,9 +25,7 @@ const NotePage = () => {
     const getNote = async () => {
       setIsLoading(true);
       try {
-        const call = await fetch(
-          "https://birth-day-ap.herokuapp.com/blessing/getnote/" + blessId
-        );
+        const call = await fetch("https://birthday-backend-production.up.railway.app/blessing/getnote/" + blessId);
         const response = await call.json();
         if (!response.note) {
           setDescription("write your text here");
@@ -60,20 +58,17 @@ const NotePage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const call = await fetch(
-        "https://birth-day-ap.herokuapp.com/blessing/note",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            blessId: blessId,
-            noteContent: description,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const call = await fetch("https://birthday-backend-production.up.railway.app/blessing/note", {
+        method: "POST",
+        body: JSON.stringify({
+          blessId: blessId,
+          noteContent: description,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const response = await call.json();
       setSuccessMsg(response.message);
       setWriteNoteClass(false);
@@ -88,9 +83,7 @@ const NotePage = () => {
   return (
     <Fragment>
       {isLoading && <SendLoader />}
-      {successMsg && (
-        <ErrorModel message={successMsg} setError={seccuesMsgHandler} />
-      )}
+      {successMsg && <ErrorModel message={successMsg} setError={seccuesMsgHandler} />}
       <Header />
       <div className="notepage">
         <h2 className="notepage_title">note</h2>
@@ -98,23 +91,12 @@ const NotePage = () => {
           <Markup content={description} />
         </div>
       </div>
-      <button
-        className={"update_note-btn " + writeNoteClass}
-        onClick={showWriteNoteHandler}
-      >
+      <button className={"update_note-btn " + writeNoteClass} onClick={showWriteNoteHandler}>
         <span>+</span>
       </button>
 
-      <form
-        className={"writeNote " + writeNoteClass}
-        onSubmit={onSubmitHandler}
-      >
-        {description && (
-          <Textwithcontent
-            text={description}
-            updateDescription={updateDescription}
-          />
-        )}
+      <form className={"writeNote " + writeNoteClass} onSubmit={onSubmitHandler}>
+        {description && <Textwithcontent text={description} updateDescription={updateDescription} />}
         <button type="submit" className="sliderAdd_form-btn">
           <span>submit</span>
           <div className="liquid"></div>

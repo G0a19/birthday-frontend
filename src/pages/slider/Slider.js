@@ -44,16 +44,12 @@ const Slider = () => {
     files.map((file) => data.append("multi-files", file));
     const sendData = async () => {
       try {
-        const call = await axios.post(
-          "https://birth-day-ap.herokuapp.com/sliderimages",
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        );
+        const call = await axios.post("https://birthday-backend-production.up.railway.app/sliderimages", data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
         console.log(call.data);
         setSeccuesMsg(call.data.message);
         setIsLoading(false);
@@ -65,34 +61,22 @@ const Slider = () => {
     sendData();
   };
 
-  const inputs = numberFiles.map((file, key) => (
-    <FileuploadInput key={key} addFile={addFile} />
-  ));
+  const inputs = numberFiles.map((file, key) => <FileuploadInput key={key} addFile={addFile} />);
 
   return (
     <Fragment>
       <Header />
       {isLoading && <SendLoader />}
-      {seccuesMsg && (
-        <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
-      )}
+      {seccuesMsg && <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />}
       {error && <ErrorModel message={error} setError={errorHandler} />}
       <div className="sliderAdd">
         <h2 className="sliderAdd_title">slider Management</h2>
         <form className="sliderAdd_form" onSubmit={submitHandler}>
           {inputs}
           <button className="plusButton" onClick={incrementFiles}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path fill="none" d="M0 0h24v24H0z"></path>
-              <path
-                fill="currentColor"
-                d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"
-              ></path>
+              <path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path>
             </svg>
             <span>Add</span>
           </button>

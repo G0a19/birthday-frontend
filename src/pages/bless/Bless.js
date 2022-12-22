@@ -33,9 +33,7 @@ const Bless = (props) => {
     setBlessId(blessId);
     const getBless = async () => {
       try {
-        const call = await fetch(
-          `https://birth-day-ap.herokuapp.com/blessing/getbless/${blessId}`
-        );
+        const call = await fetch(`https://birthday-backend-production.up.railway.app/blessing/getbless/${blessId}`);
         const response = await call.json();
         if (response.error) setErr(response.error);
         setBless(response.bless);
@@ -76,20 +74,17 @@ const Bless = (props) => {
     setTrash(false);
     setIsLoading(true);
     try {
-      const call = await fetch(
-        `https://birth-day-ap.herokuapp.com/blessing/${blessId}`,
-        {
-          method: "DELETE",
-          body: JSON.stringify({
-            userId: user.id,
-            imageId: image.id,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const call = await fetch(`https://birthday-backend-production.up.railway.app/blessing/${blessId}`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          userId: user.id,
+          imageId: image.id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const response = await call.json();
       if (response.error) return setErr(response.error);
       setSeccuesMsg(response.message);
@@ -104,16 +99,8 @@ const Bless = (props) => {
 
   return (
     <Fragment>
-      {seccuesMsg && (
-        <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
-      )}
-      {trash && (
-        <Choisemodel
-          title="Do you want to delete this bless"
-          no={hideTrash}
-          yes={deleteBlessHandler}
-        />
-      )}
+      {seccuesMsg && <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />}
+      {trash && <Choisemodel title="Do you want to delete this bless" no={hideTrash} yes={deleteBlessHandler} />}
       {isLoading && <FeatchLoader />}
       <Header />
       {err && <ErrorModel message={err} setError={setError} />}
@@ -125,22 +112,10 @@ const Bless = (props) => {
             <div className="blessRead_description">
               <Markup content={bless.description} />
             </div>
-            <img
-              className="blessRead_img"
-              src={
-                "https://drive.google.com/uc?export=view&id=" + image.id ?? ""
-              }
-              alt="img"
-            />
+            <img className="blessRead_img" src={"https://drive.google.com/uc?export=view&id=" + image.id ?? ""} alt="img" />
             {bless.user === user.id && (
-              <div
-                onClick={showbtnsHandler}
-                className={"btns_wrapper " + showbtns}
-              >
-                <Link
-                  to={"/rewrite/?bless=" + blessId}
-                  className="blessRead_rewrite"
-                >
+              <div onClick={showbtnsHandler} className={"btns_wrapper " + showbtns}>
+                <Link to={"/rewrite/?bless=" + blessId} className="blessRead_rewrite">
                   <img src={pencil} alt="rewrite"></img>
                 </Link>
                 <button onClick={showTrash} className="remove_bless">
@@ -148,9 +123,7 @@ const Bless = (props) => {
                 </button>
               </div>
             )}
-            <div className="date">{`${date.getDate()}/${
-              date.getMonth() + 1
-            }/${date.getFullYear()}`}</div>
+            <div className="date">{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</div>
           </Fragment>
         )}
       </div>

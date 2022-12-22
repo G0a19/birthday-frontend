@@ -38,7 +38,7 @@ const Login = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const call = await fetch("https://birth-day-ap.herokuapp.com/users/login", {
+    const call = await fetch("https://birthday-backend-production.up.railway.app/users/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: password }),
       headers: {
@@ -62,24 +62,12 @@ const Login = (props) => {
         <form className="form" onSubmit={onSubmit}>
           <h2 className="form_title">Login</h2>
           <div className="form_contianer">
-            <input
-              className="form_input"
-              placeholder="Email"
-              type="email"
-              value={email}
-              onChange={updateEmail}
-            />
+            <input className="form_input" placeholder="Email" type="email" value={email} onChange={updateEmail} />
             <label className={"form_label " + emailLabel}>Email</label>
           </div>
 
           <div className="form_contianer">
-            <input
-              className="form_input"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={updatePassword}
-            />
+            <input className="form_input" type="password" placeholder="Password" value={password} onChange={updatePassword} />
             <label className={"form_label " + passwordLabel}>Password</label>
           </div>
 

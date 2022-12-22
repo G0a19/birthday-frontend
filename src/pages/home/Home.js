@@ -22,7 +22,7 @@ const Home = () => {
     setIsLoading(true);
     const getUsers = async () => {
       try {
-        const call = await fetch("https://birth-day-ap.herokuapp.com/users");
+        const call = await fetch("https://birthday-backend-production.up.railway.app/users");
         const response = await call.json();
         setUsers(response.users);
         setIsLoading(false);
@@ -33,9 +33,7 @@ const Home = () => {
     const getSliderImages = async () => {
       setIsLoading(true);
       try {
-        const call = await fetch(
-          "https://birth-day-ap.herokuapp.com/sliderimages"
-        );
+        const call = await fetch("https://birthday-backend-production.up.railway.app/sliderimages");
         const response = await call.json();
         if (response.images.length !== 0) setSliderImages(response);
         else setSliderImages(false);
@@ -51,10 +49,7 @@ const Home = () => {
   const sliders = sliderImages ? (
     sliderImages.images.map((slider, key) => (
       <SwiperSlide className="slider" key={key}>
-        <img
-          src={`https://drive.google.com/uc?export=view&id=${slider.imageId}`}
-          alt="img"
-        ></img>
+        <img src={`https://drive.google.com/uc?export=view&id=${slider.imageId}`} alt="img"></img>
       </SwiperSlide>
     ))
   ) : (

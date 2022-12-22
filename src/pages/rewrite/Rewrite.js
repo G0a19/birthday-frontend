@@ -62,9 +62,7 @@ const Rewrite = () => {
     setBlessId(blessId);
     const getBless = async () => {
       try {
-        const call = await fetch(
-          `https://birth-day-ap.herokuapp.com/blessing/getbless/${blessId}`
-        );
+        const call = await fetch(`https://birthday-backend-production.up.railway.app/blessing/getbless/${blessId}`);
         const response = await call.json();
         console.log(response);
         if (response.error) setError(response.error);
@@ -87,16 +85,12 @@ const Rewrite = () => {
     data.append("description", description);
     data.append("year", year);
     try {
-      const call = await axios.patch(
-        `https://birth-day-ap.herokuapp.com/blessing/${bless.id}`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const call = await axios.patch(`https://birthday-backend-production.up.railway.app/blessing/${bless.id}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       if (call.data.error) {
         setError(call.data.error);
         setIsLoading(false);
@@ -112,9 +106,7 @@ const Rewrite = () => {
 
   return (
     <Fragment>
-      {seccuesMsg && (
-        <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
-      )}
+      {seccuesMsg && <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />}
       {error && <ErrorModel message={error} setError={errorSet} />}
       {isLoading && <SendLoader />}
       <Header></Header>
@@ -122,25 +114,10 @@ const Rewrite = () => {
         <div className="new">
           <h2 className="new_title">update bless</h2>
           <form onSubmit={submitHandler}>
-            <Input
-              value={title}
-              handler={updateTitle}
-              placeholder="TITLE"
-              title="title"
-              type="text"
-            />
-            <Input
-              value={year}
-              handler={updateYear}
-              placeholder="YEAR"
-              title="year"
-              type="number"
-            />
+            <Input value={title} handler={updateTitle} placeholder="TITLE" title="title" type="text" />
+            <Input value={year} handler={updateYear} placeholder="YEAR" title="year" type="number" />
             <Input handler={updateImage} type="file" accept=".png,.jpeg,.jpg" />
-            <Textwithcontent
-              updateDescription={updateDescription}
-              text={bless.description}
-            />
+            <Textwithcontent updateDescription={updateDescription} text={bless.description} />
             <div className="new_btn-contianer">
               <button className="new_btn" type="submit">
                 update

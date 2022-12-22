@@ -23,9 +23,7 @@ const Sliderimages = () => {
     const getSliderImages = async () => {
       setIsLoading(true);
       try {
-        const call = await fetch(
-          "https://birth-day-ap.herokuapp.com/sliderimages"
-        );
+        const call = await fetch("https://birthday-backend-production.up.railway.app/sliderimages");
         const response = await call.json();
         if (response.images.length !== 0) setSliderImages(response.images);
         else setSliderImages(false);
@@ -52,17 +50,14 @@ const Sliderimages = () => {
     setDeleteImage(false);
     setIsLoading(true);
     try {
-      const call = await fetch(
-        "https://birth-day-ap.herokuapp.com/sliderimages",
-        {
-          method: "DELETE",
-          body: JSON.stringify({ imageid: imageId }),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const call = await fetch("https://birthday-backend-production.up.railway.app/sliderimages", {
+        method: "DELETE",
+        body: JSON.stringify({ imageid: imageId }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const response = await call.json();
       if (response.error) {
         setError(response.error);
@@ -87,15 +82,8 @@ const Sliderimages = () => {
     sliderImages.length > 0 ? (
       sliderImages.map((image, key) => (
         <div key={key} className="images_single">
-          <img
-            src={"https://drive.google.com/uc?export=view&id=" + image.imageId}
-            alt="img"
-          />
-          <div
-            className="images_single-remove"
-            data-id={image.imageId}
-            onClick={removeHandler}
-          >
+          <img src={"https://drive.google.com/uc?export=view&id=" + image.imageId} alt="img" />
+          <div className="images_single-remove" data-id={image.imageId} onClick={removeHandler}>
             <Trash />
           </div>
         </div>
@@ -107,18 +95,10 @@ const Sliderimages = () => {
   return (
     <Fragment>
       <Header />
-      {seccuesMsg && (
-        <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
-      )}
+      {seccuesMsg && <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />}
       {error && <ErrorModel message={error} setError={errorSet} />}
       {isLoading && <FeatchLoader />}
-      {deleteImage && (
-        <Choisemodel
-          title="Do you want to delete this image"
-          no={removeChoiceModelHandler}
-          yes={deleteImageHandler}
-        />
-      )}
+      {deleteImage && <Choisemodel title="Do you want to delete this image" no={removeChoiceModelHandler} yes={deleteImageHandler} />}
       <SRLWrapper>
         <div className="images">{components}</div>
       </SRLWrapper>

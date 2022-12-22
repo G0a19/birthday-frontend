@@ -20,21 +20,14 @@ const User = (props) => {
     setUserId(param.get("user"));
 
     const getBlessings = async () => {
-      const call = await fetch("https://birth-day-ap.herokuapp.com/blessing");
+      const call = await fetch("https://birthday-backend-production.up.railway.app/blessing");
       const response = await call.json();
       setBlessings(response.blesses);
-      const secondCall = await fetch(
-        "https://birth-day-ap.herokuapp.com/users/dateofbirth/" +
-          param.get("user")
-      );
+      const secondCall = await fetch("https://birthday-backend-production.up.railway.app/users/dateofbirth/" + param.get("user"));
       const secondResponse = await secondCall.json();
-      let date = new Date(secondResponse.dateOfBirth).setFullYear(
-        new Date().getFullYear()
-      );
+      let date = new Date(secondResponse.dateOfBirth).setFullYear(new Date().getFullYear());
       if (date < new Date().getTime()) {
-        date = new Date(secondResponse.dateOfBirth).setFullYear(
-          new Date().getFullYear() + 1
-        );
+        date = new Date(secondResponse.dateOfBirth).setFullYear(new Date().getFullYear() + 1);
       }
       setDateOfBirth(date);
       setInterval(() => {
@@ -63,9 +56,7 @@ const User = (props) => {
               Object.keys(dateBettwen).map((keyName, i) => (
                 <div className="timeOut_single" key={i}>
                   <span className="timeOut_single-description">{keyName}</span>
-                  <span className="timeOut_single-time">
-                    {dateBettwen[keyName]}
-                  </span>
+                  <span className="timeOut_single-time">{dateBettwen[keyName]}</span>
                 </div>
               ))}
           </div>
@@ -74,19 +65,13 @@ const User = (props) => {
         <div className="blessings_wrapper">
           {myBlessings.length !== 0 &&
             myBlessings.map((bless, key) => (
-              <Link
-                to={`/blesspage/?bless=${bless.id}`}
-                className="single_bless"
-                key={key}
-              >
+              <Link to={`/blesspage/?bless=${bless.id}`} className="single_bless" key={key}>
                 <h2 className="single_bless-year">{bless.year}</h2>{" "}
               </Link>
             ))}
         </div>
       </div>
-      {myBlessings.length === 0 && (
-        <h2 className="not_found">This user dont have blesses</h2>
-      )}
+      {myBlessings.length === 0 && <h2 className="not_found">This user dont have blesses</h2>}
     </Fragment>
   );
 };

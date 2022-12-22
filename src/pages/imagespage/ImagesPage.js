@@ -32,9 +32,7 @@ const ImagesPage = () => {
     const getImages = async () => {
       setIsLoading(1);
       try {
-        const call = await fetch(
-          "https://birth-day-ap.herokuapp.com/images/" + blessId
-        );
+        const call = await fetch("https://birthday-backend-production.up.railway.app/images/" + blessId);
         const response = await call.json();
         setIsLoading(false);
         setBlessImages(response.images);
@@ -76,16 +74,12 @@ const ImagesPage = () => {
     formData.append("blessId", blessId);
     console.log(formData);
     try {
-      const call = await axios.post(
-        "https://birth-day-ap.herokuapp.com/images",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const call = await axios.post("https://birthday-backend-production.up.railway.app/images", formData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       if (call.data.error) {
         setError(call.data.error);
         return;
@@ -113,7 +107,7 @@ const ImagesPage = () => {
     setDeleteImage(false);
     setIsLoading(2);
     try {
-      const call = await fetch("https://birth-day-ap.herokuapp.com/images", {
+      const call = await fetch("https://birthday-backend-production.up.railway.app/images", {
         method: "DELETE",
         body: JSON.stringify({ imageid: imageId }),
         headers: {
@@ -137,30 +131,14 @@ const ImagesPage = () => {
       <Header />
       {isLoading === 1 && <FeatchLoader />}
       {isLoading === 2 && <SendLoader />}
-      {removeMsg && (
-        <ErrorModel message={removeMsg} setError={removeMsgHandler} />
-      )}
-      {seccuesMsg && (
-        <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />
-      )}
+      {removeMsg && <ErrorModel message={removeMsg} setError={removeMsgHandler} />}
+      {seccuesMsg && <ErrorModel message={seccuesMsg} setError={seccuesMsgHandler} />}
       {error && <ErrorModel message={error} setError={errorHandler} />}
-      {deleteImage && (
-        <Choisemodel
-          title="Do you want to delete this image"
-          no={removeChoiceModelHandler}
-          yes={deleteImageHandler}
-        />
-      )}
+      {deleteImage && <Choisemodel title="Do you want to delete this image" no={removeChoiceModelHandler} yes={deleteImageHandler} />}
       <div className="imagespage">
         <form className="imagespage_form" onSubmit={onUploadHandler}>
           <div className="imagespage_upload">
-            <input
-              className="imagespage_upload-input"
-              type="file"
-              onChange={uploadImagesHandler}
-              accept=".png,.jpeg,.jpg"
-              multiple
-            />
+            <input className="imagespage_upload-input" type="file" onChange={uploadImagesHandler} accept=".png,.jpeg,.jpg" multiple />
             <Upload />
           </div>
           <button className="imagespage_form-btn download-button">
@@ -203,18 +181,8 @@ const ImagesPage = () => {
             {blessImages &&
               blessImages.map((image, key) => (
                 <div key={key} className="imagespage_singleImage">
-                  <img
-                    src={
-                      "https://drive.google.com/uc?export=view&id=" +
-                      image.imageId
-                    }
-                    alt="img"
-                  />
-                  <div
-                    className="imagespage_singleImage-remove"
-                    data-id={image.imageId}
-                    onClick={removeImageHandler}
-                  >
+                  <img src={"https://drive.google.com/uc?export=view&id=" + image.imageId} alt="img" />
+                  <div className="imagespage_singleImage-remove" data-id={image.imageId} onClick={removeImageHandler}>
                     <Trash />
                   </div>
                 </div>
