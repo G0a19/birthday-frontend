@@ -38,7 +38,7 @@ const Login = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const call = await fetch("https://birthday-backend-production.up.railway.app/users/login", {
+    const call = await fetch("https://birthday-backend.onrender.com/users/login", {
       method: "POST",
       body: JSON.stringify({ email: email, password: password }),
       headers: {

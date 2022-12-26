@@ -33,7 +33,7 @@ const Bless = (props) => {
     setBlessId(blessId);
     const getBless = async () => {
       try {
-        const call = await fetch(`https://birthday-backend-production.up.railway.app/blessing/getbless/${blessId}`);
+        const call = await fetch(`https://birthday-backend.onrender.com/blessing/getbless/${blessId}`);
         const response = await call.json();
         if (response.error) setErr(response.error);
         setBless(response.bless);
@@ -74,7 +74,7 @@ const Bless = (props) => {
     setTrash(false);
     setIsLoading(true);
     try {
-      const call = await fetch(`https://birthday-backend-production.up.railway.app/blessing/${blessId}`, {
+      const call = await fetch(`https://birthday-backend.onrender.com/blessing/${blessId}`, {
         method: "DELETE",
         body: JSON.stringify({
           userId: user.id,

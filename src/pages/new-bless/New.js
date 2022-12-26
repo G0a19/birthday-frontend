@@ -58,7 +58,7 @@ const New = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const call = await fetch("https://birthday-backend-production.up.railway.app/users");
+      const call = await fetch("https://birthday-backend.onrender.com/users");
       const response = await call.json();
       setUsers(response.users);
     };
@@ -76,7 +76,7 @@ const New = () => {
     data.append("year", year);
     data.append("userId", user.id);
     try {
-      const call = await axios.post("https://birthday-backend-production.up.railway.app/blessing", data, {
+      const call = await axios.post("https://birthday-backend.onrender.com/blessing", data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,

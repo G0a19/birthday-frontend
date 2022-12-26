@@ -20,10 +20,10 @@ const User = (props) => {
     setUserId(param.get("user"));
 
     const getBlessings = async () => {
-      const call = await fetch("https://birthday-backend-production.up.railway.app/blessing");
+      const call = await fetch("https://birthday-backend.onrender.com/blessing");
       const response = await call.json();
       setBlessings(response.blesses);
-      const secondCall = await fetch("https://birthday-backend-production.up.railway.app/users/dateofbirth/" + param.get("user"));
+      const secondCall = await fetch("https://birthday-backend.onrender.com/users/dateofbirth/" + param.get("user"));
       const secondResponse = await secondCall.json();
       let date = new Date(secondResponse.dateOfBirth).setFullYear(new Date().getFullYear());
       if (date < new Date().getTime()) {

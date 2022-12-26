@@ -32,7 +32,7 @@ const ImagesPage = () => {
     const getImages = async () => {
       setIsLoading(1);
       try {
-        const call = await fetch("https://birthday-backend-production.up.railway.app/images/" + blessId);
+        const call = await fetch("https://birthday-backend.onrender.com/images/" + blessId);
         const response = await call.json();
         setIsLoading(false);
         setBlessImages(response.images);
@@ -74,7 +74,7 @@ const ImagesPage = () => {
     formData.append("blessId", blessId);
     console.log(formData);
     try {
-      const call = await axios.post("https://birthday-backend-production.up.railway.app/images", formData, {
+      const call = await axios.post("https://birthday-backend.onrender.com/images", formData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -107,7 +107,7 @@ const ImagesPage = () => {
     setDeleteImage(false);
     setIsLoading(2);
     try {
-      const call = await fetch("https://birthday-backend-production.up.railway.app/images", {
+      const call = await fetch("https://birthday-backend.onrender.com/images", {
         method: "DELETE",
         body: JSON.stringify({ imageid: imageId }),
         headers: {

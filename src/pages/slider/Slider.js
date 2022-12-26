@@ -44,7 +44,7 @@ const Slider = () => {
     files.map((file) => data.append("multi-files", file));
     const sendData = async () => {
       try {
-        const call = await axios.post("https://birthday-backend-production.up.railway.app/sliderimages", data, {
+        const call = await axios.post("https://birthday-backend.onrender.com/sliderimages", data, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${user.token}`,

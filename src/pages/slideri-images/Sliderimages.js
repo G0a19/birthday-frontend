@@ -23,7 +23,7 @@ const Sliderimages = () => {
     const getSliderImages = async () => {
       setIsLoading(true);
       try {
-        const call = await fetch("https://birthday-backend-production.up.railway.app/sliderimages");
+        const call = await fetch("https://birthday-backend.onrender.com/sliderimages");
         const response = await call.json();
         if (response.images.length !== 0) setSliderImages(response.images);
         else setSliderImages(false);
@@ -50,7 +50,7 @@ const Sliderimages = () => {
     setDeleteImage(false);
     setIsLoading(true);
     try {
-      const call = await fetch("https://birthday-backend-production.up.railway.app/sliderimages", {
+      const call = await fetch("https://birthday-backend.onrender.com/sliderimages", {
         method: "DELETE",
         body: JSON.stringify({ imageid: imageId }),
         headers: {

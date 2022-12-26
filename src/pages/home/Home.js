@@ -22,7 +22,7 @@ const Home = () => {
     setIsLoading(true);
     const getUsers = async () => {
       try {
-        const call = await fetch("https://birthday-backend-production.up.railway.app/users");
+        const call = await fetch("https://birthday-backend.onrender.com/users");
         const response = await call.json();
         setUsers(response.users);
         setIsLoading(false);
@@ -33,7 +33,7 @@ const Home = () => {
     const getSliderImages = async () => {
       setIsLoading(true);
       try {
-        const call = await fetch("https://birthday-backend-production.up.railway.app/sliderimages");
+        const call = await fetch("https://birthday-backend.onrender.com/sliderimages");
         const response = await call.json();
         if (response.images.length !== 0) setSliderImages(response);
         else setSliderImages(false);

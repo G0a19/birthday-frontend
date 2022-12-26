@@ -62,7 +62,7 @@ const Rewrite = () => {
     setBlessId(blessId);
     const getBless = async () => {
       try {
-        const call = await fetch(`https://birthday-backend-production.up.railway.app/blessing/getbless/${blessId}`);
+        const call = await fetch(`https://birthday-backend.onrender.com/blessing/getbless/${blessId}`);
         const response = await call.json();
         console.log(response);
         if (response.error) setError(response.error);
@@ -85,7 +85,7 @@ const Rewrite = () => {
     data.append("description", description);
     data.append("year", year);
     try {
-      const call = await axios.patch(`https://birthday-backend-production.up.railway.app/blessing/${bless.id}`, data, {
+      const call = await axios.patch(`https://birthday-backend.onrender.com/blessing/${bless.id}`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,

@@ -25,7 +25,7 @@ const NotePage = () => {
     const getNote = async () => {
       setIsLoading(true);
       try {
-        const call = await fetch("https://birthday-backend-production.up.railway.app/blessing/getnote/" + blessId);
+        const call = await fetch("https://birthday-backend.onrender.com/blessing/getnote/" + blessId);
         const response = await call.json();
         if (!response.note) {
           setDescription("write your text here");
@@ -58,7 +58,7 @@ const NotePage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const call = await fetch("https://birthday-backend-production.up.railway.app/blessing/note", {
+      const call = await fetch("https://birthday-backend.onrender.com/blessing/note", {
         method: "POST",
         body: JSON.stringify({
           blessId: blessId,
