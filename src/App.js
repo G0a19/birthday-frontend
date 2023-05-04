@@ -19,27 +19,25 @@ const Slider = React.lazy(() => import("./pages/slider/Slider.js"));
 const BlessPage = React.lazy(() => import("./pages/blessPage/BlessPage.js"));
 const ImagesPage = React.lazy(() => import("./pages/imagespage/ImagesPage.js"));
 const NotePage = React.lazy(() => import("./pages/notepage/NotePage.js"));
-const SliderImages = React.lazy(() =>
-  import("./pages/slideri-images/Sliderimages.js")
-);
+const SliderImages = React.lazy(() => import("./pages/slideri-images/Sliderimages.js"));
 
 function App() {
   let user = useSelector((state) => state.user);
   const [isLogout, setIsLogout] = useState(false);
 
   useEffect(() => {
-    if (user.token) {
-      const { exp } = jwt_decode(user.token);
-      const expirationTime = exp * 1000 - 60000;
-      if (Date.now() >= expirationTime) {
-        setIsLogout(true);
-      } else {
-        const remaningTime = expirationTime - new Date();
-        setTimeout(() => {
-          setIsLogout(true);
-        }, remaningTime);
-      }
-    }
+    // if (user.token) {
+    //   const { exp } = jwt_decode(user.token);
+    //   const expirationTime = exp * 1000 - 60000;
+    //   if (Date.now() >= expirationTime) {
+    //     setIsLogout(true);
+    //   } else {
+    //     const remaningTime = expirationTime - new Date();
+    //     setTimeout(() => {
+    //       setIsLogout(true);
+    //     }, remaningTime);
+    //   }
+    // }
   }, [user.token]);
 
   const logoutHandler = () => {
@@ -49,12 +47,7 @@ function App() {
 
   return (
     <Suspense fallback={<Apploader />}>
-      {isLogout && (
-        <ErrorModel
-          message="expiration Time is over"
-          setError={logoutHandler}
-        />
-      )}
+      {isLogout && <ErrorModel message="expiration Time is over" setError={logoutHandler} />}
       <Switch>
         {!user.token && (
           <Route path="/">
